@@ -13,6 +13,14 @@ const nextConfig = {
     unoptimized: true,
   },
   allowedDevOrigins: ["*.fly.dev", "upright-understanding.net", "*.upright-understanding.net", "*.prod-runtime.all-hands.dev"],
+  webpack: (config, { isServer }) => {
+    // Suppress OpenTelemetry warnings
+    config.ignoreWarnings = [
+      { module: /node_modules\/@opentelemetry/ },
+      { module: /node_modules\/require-in-the-middle/ },
+    ]
+    return config
+  },
 }
 
 const sentryWebpackPluginOptions = {
